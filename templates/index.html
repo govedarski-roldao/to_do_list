@@ -21,34 +21,44 @@
 					{% from "bootstrap5/form.html" import render_form %}
 					{{ ckeditor.load() }}
 					{{ render_form(form) }}
-
+					<p><a href="#done">GO TO MARK AS DONE</a></p>
 				</header>
 				<div class="content">
-					<h2 style="padding:100px 0px 5px 0px">To do List</h2>
+
 					<span>
-						<ul>
+						<ul style="padding-top:50px">
 							{%for field in list %}
 								{%if field.done == 0%}
 									<li
-											style="list-style: circle "><h2>{{ field.message }}      <a href="{{url_for('mark_as_done', id=field.id)}}" style="padding:10px; font-size:0.5rem">Done</a></h2></li>
+											style="list-style: circle "><h2>{{ field.message }}      <a href="{{url_for('mark_as_done', id=field.id)}}" style="padding:10px; font-size:0.5rem">Done</a>  <a href="{{url_for('delete_done',id=field.id)}}" style="padding:10px; font-size:0.5rem">Delete</a></h2></li>
 								{%endif%}
 							{% endfor %}
 						</ul>
 					</span>
-					<h2 style="padding:100px 0px 5px 0px">Finished Tasks</h2>
-					<span>
+
+
+				</div>
+			</section>
+			<section>
+				<header><h2 id="done">Finished tasks</h2></header>
+
+				<div class="content">
+							<span>
 						<ul>
 							{%for field in list%}
 								{%if field.done == 1%}
 									<li
-											style="list-style: circle "><h2>{{ field.message }}
-										<a href="{{url_for('delete_done',id=field.id)}}" style="padding:10px; font-size:0.5rem">Delete</a></h2></li>
+											style="list-style: circle "><h2 style="text-decoration: line-through;">{{ field.message }}
+										<a href="{{url_for('delete_done',id=field.id)}}" style="padding:10px;  font-size:0.5rem">Delete</a></h2></li>
 								{%endif%}
 							{%endfor%}
 						</ul>
 					</span>
+
+					</form>
 				</div>
 			</section>
+			<div class="copyright">&copy; Untitled. All rights reserved. Design: Rodolfo Govedarski-Roldao.</div>
 		</div>
 
 		<!-- Scripts -->

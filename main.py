@@ -39,7 +39,7 @@ with app.app_context():
 
 # Form
 class NewTodo(FlaskForm):
-    text = StringField("New todo", validators=[DataRequired()])
+    text = StringField("New todo", validators=[DataRequired()], render_kw={"autofocus": True})
     submit = SubmitField("Add Todo")
 
 
