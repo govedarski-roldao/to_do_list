@@ -18,21 +18,29 @@
 			<section class="intro">
 				<header>
 					<h1>To do List</h1>
-
-
 					{% from "bootstrap5/form.html" import render_form %}
 					{{ ckeditor.load() }}
 					{{ render_form(form) }}
-					<ul class="actions">
-						<li><a href="#first" class="arrow right"><span class="label">Next</span></a></li>
-					</ul>
+
 				</header>
 				<div class="content">
 					<span>
-						<ul>
+						<ul style="padding-top:50px">
 							{%for field in list %}
-								<li><h2>{{ field.message }}</h2></li>
+								{%if field.done == 0%}
+									<li style="list-style: circle "><h2>{{ field.message }}      <a href="#" style="padding:10px; font-size:0.5rem">Done</a></h2></li>
+								{%endif%}
 							{% endfor %}
+						</ul>
+					</span>
+					<h2 style="padding:100px 0px 5px 0px">Finished Tasks</h2>
+					<span>
+						<ul>
+							{%for field in list%}
+								{%if field.done == 1%}
+									<li style="list-style: circle "><h2>{{ field.message }}      <a href="#" style="padding:10px; font-size:0.5rem">Delete</a></h2></li>
+								{%endif%}
+							{%endfor%}
 						</ul>
 					</span>
 				</div>

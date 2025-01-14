@@ -57,6 +57,8 @@ def home():
     todo_list = ToDo.query.order_by(desc(ToDo.id)).all()
     return render_template("index.html", form=form, list=todo_list)
 
+@app.route("/done", methods=['GET','POST'])
+def mark_as_done():
 
 if __name__ == "__main__":
     app.run(debug=True)
