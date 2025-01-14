@@ -59,6 +59,7 @@ def home():
 
 @app.route("/done", methods=['GET','POST'])
 def mark_as_done():
+    pass
 
 if __name__ == "__main__":
     app.run(debug=True)
