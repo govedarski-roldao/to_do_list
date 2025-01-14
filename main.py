@@ -10,6 +10,7 @@ from wtforms.validators import DataRequired
 from wtforms.fields.simple import StringField, BooleanField, SubmitField
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -24,7 +25,7 @@ db.init_app(app)
 
 
 # database
-class ToDo(db.model):
+class ToDo(db.Model):
     __tablename__ = "todo"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     message: Mapped[str] = mapped_column(String(500))
@@ -43,11 +44,11 @@ class NewTodo(FlaskForm):
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    form = NewTodo
+    form = NewTodo()
     if form.validate_on_submit():
         pass
-    todo_list = ToDo.qwery.all()
-    return render_template("index", form=form, list=todo_list)
+    todo_list = ToDo.query.all()
+    return render_template("index.html", form=form, list=todo_list)
 
 
 if __name__ == "__main__":
