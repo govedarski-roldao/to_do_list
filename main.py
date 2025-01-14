@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, redirect, flash
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from sqlalchemy import Integer, Boolean, String, DATETIME
+from sqlalchemy import Integer, Boolean, String, DATETIME, desc
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from flask_ckeditor import CKEditor
 from datetime import datetime
@@ -39,15 +39,22 @@ with app.app_context():
 
 # Form
 class NewTodo(FlaskForm):
-    text = StringField("New todo",validators=[DataRequired()])
+    text = StringField("New todo", validators=[DataRequired()])
     submit = SubmitField("Add Todo")
+
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
     form = NewTodo()
     if form.validate_on_submit():
-        pass
-    todo_list = ToDo.query.all()
+        new_todo = ToDo(
+            message=form.text.data,
+            done=0
+        )
+        db.session.add(new_todo)
+        db.session.commit()
+        return redirect(url_for('home'))
+    todo_list = ToDo.query.order_by(desc(ToDo.id)).all()
     return render_template("index.html", form=form, list=todo_list)
 
 
