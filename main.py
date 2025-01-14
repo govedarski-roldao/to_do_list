@@ -57,9 +57,22 @@ def home():
     todo_list = ToDo.query.order_by(desc(ToDo.id)).all()
     return render_template("index.html", form=form, list=todo_list)
 
-@app.route("/done", methods=['GET','POST'])
-def mark_as_done():
-    pass
+
+@app.route("/done/<int:id>", methods=['GET', 'POST'])
+def mark_as_done(id):
+    todo = ToDo.query.get(id)
+    todo.done = 1
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
+@app.route('/delete/<int:id>', methods=['GET', 'POST'])
+def delete_done(id):
+    post_to_delete = db.get_or_404(ToDo, id)
+    db.session.delete(post_to_delete)
+    db.session.commit()
+    return redirect(url_for('home'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

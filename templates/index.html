@@ -24,12 +24,13 @@
 
 				</header>
 				<div class="content">
-						<h2 style="padding:100px 0px 5px 0px">To do List</h2>
+					<h2 style="padding:100px 0px 5px 0px">To do List</h2>
 					<span>
 						<ul>
 							{%for field in list %}
 								{%if field.done == 0%}
-									<li style="list-style: circle "><h2>{{ field.message }}      <a href="#" style="padding:10px; font-size:0.5rem">Done</a></h2></li>
+									<li
+											style="list-style: circle "><h2>{{ field.message }}      <a href="{{url_for('mark_as_done', id=field.id)}}" style="padding:10px; font-size:0.5rem">Done</a></h2></li>
 								{%endif%}
 							{% endfor %}
 						</ul>
@@ -39,7 +40,9 @@
 						<ul>
 							{%for field in list%}
 								{%if field.done == 1%}
-									<li style="list-style: circle "><h2>{{ field.message }}      <a href="#" style="padding:10px; font-size:0.5rem">Delete</a></h2></li>
+									<li
+											style="list-style: circle "><h2>{{ field.message }}
+										<a href="{{url_for('delete_done',id=field.id)}}" style="padding:10px; font-size:0.5rem">Delete</a></h2></li>
 								{%endif%}
 							{%endfor%}
 						</ul>
